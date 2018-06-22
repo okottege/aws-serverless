@@ -80,16 +80,22 @@
         </a>
       </li>
     </ul>
+    <greeter />
   </div>
 </template>
 
 <script>
+import Greeter from './Greet';
+
 export default {
   name: 'HelloWorld',
   data() {
     return {
       msg: 'Welcome to Your Vue.js App',
     };
+  },
+  components: {
+    Greeter,
   },
 };
 </script>
