@@ -53,7 +53,7 @@ namespace SayHelloService
 			    {
 				    StatusCode = (int)HttpStatusCode.OK,
 				    Body = $"Hello {name}!  How are you?",
-				    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+				    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" },{ "Access-Control-Allow-Origin", "*" } }
 			    };
 			}
 
