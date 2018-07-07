@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Amazon.Lambda.Core;
@@ -52,7 +53,7 @@ namespace SayHelloService
 			    return new APIGatewayProxyResponse
 			    {
 				    StatusCode = (int)HttpStatusCode.OK,
-				    Body = $"Hello {name}!  How are you?",
+				    Body = $"Hello {name}!  How are you?  Current time is: {DateTime.Now}",
 				    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" },{ "Access-Control-Allow-Origin", "*" } }
 			    };
 			}
