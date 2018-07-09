@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.APIGatewayEvents;
@@ -60,5 +61,15 @@ namespace SayHelloService
 
 		    return new APIGatewayProxyResponse {StatusCode = (int) HttpStatusCode.BadRequest};
 	    }
+
+	    public APIGatewayProxyResponse GetCurrentDateUtc(APIGatewayProxyRequest request, ILambdaContext context)
+	    {
+		    return new APIGatewayProxyResponse
+		    {
+			    StatusCode = (int) HttpStatusCode.OK,
+			    Body = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+			    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
+		    };
+		}
     }
 }

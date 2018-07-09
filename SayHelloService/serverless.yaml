@@ -18,3 +18,26 @@ functions:
             parameters:
               paths:
                 name: true
+  get-date:
+    handler: SayHelloService::SayHelloService.SayHello::GetCurrentDateUtc
+	events:
+	  - http:
+          path: get-date-utc
+          method: GET
+          cors: true
+          authorizer:
+            
+
+resources:
+  Resources:
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        UserPoolName: say-hello-user-pool
+
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: say-hello-client
+        UserPoolId:
+          Ref: CognitoUserPool
