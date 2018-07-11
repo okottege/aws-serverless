@@ -11,7 +11,7 @@ functions:
     handler: SayHelloService::SayHelloService.SayHello::GreetByName
     events:
       - http:
-          path: greet/{name}
+          path: greetings/{name}
           method: GET
           cors: true
           request:
@@ -20,18 +20,14 @@ functions:
                 name: true
   utc-date:
     handler: SayHelloService::SayHelloService.SayHello::GetCurrentDateUtc
-	events:
-	  - http:
-          path: getdate/utc
-          method: POST
+    events:
+      - http:
+          path: get-utc
+          method: GET
           cors: true
-		  request:
-            parameters:
-              querystrings:
-                type:false
-#          authorizer:
-#            arn: arn:aws:cognito-idp:us-west-2:451515956712:userpool/us-west-2_j8i0laMuA
-#            identitySource: method.request.header.Authorization
+          authorizer:
+            arn: arn:aws:cognito-idp:us-west-2:451515956712:userpool/us-west-2_j8i0laMuA
+            identitySource: method.request.header.Authorization
 
 resources:
   Resources:
