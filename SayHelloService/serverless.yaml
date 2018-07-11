@@ -22,11 +22,12 @@ functions:
     handler: SayHelloService::SayHelloService.SayHello::GetCurrentDateUtc
 	events:
 	  - http:
-          path: get-date-utc
+          path: getdate/utc
           method: GET
           cors: true
-          authorizer:
-            
+#          authorizer:
+#            arn: arn:aws:cognito-idp:us-west-2:451515956712:userpool/us-west-2_j8i0laMuA
+#            identitySource: method.request.header.Authorization
 
 resources:
   Resources:
