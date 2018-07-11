@@ -18,13 +18,17 @@ functions:
             parameters:
               paths:
                 name: true
-  get-date:
+  utc-date:
     handler: SayHelloService::SayHelloService.SayHello::GetCurrentDateUtc
 	events:
 	  - http:
           path: getdate/utc
-          method: GET
+          method: POST
           cors: true
+		  request:
+            parameters:
+              querystrings:
+                type:false
 #          authorizer:
 #            arn: arn:aws:cognito-idp:us-west-2:451515956712:userpool/us-west-2_j8i0laMuA
 #            identitySource: method.request.header.Authorization
