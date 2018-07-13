@@ -1,6 +1,6 @@
 const config = {
   backEnd: {
-    greetingServiceUrl: 'https://5nmlmc55zb.execute-api.us-west-2.amazonaws.com/dev',
+    serviceUrl: 'https://qf3kf872l5.execute-api.us-west-2.amazonaws.com/dev',
   },
 };
 

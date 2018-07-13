@@ -1,5 +1,8 @@
 <template>
-  <h1>{{msg}}</h1>
+  <div>
+    <h1>{{msg}}</h1>
+    <h2>Utc Date Time {{msgUtcDateTime}}</h2>
+  </div>
 </template>
 <script>
 import axios from 'axios';
@@ -10,12 +13,18 @@ export default {
   data() {
     return {
       msg: '',
+      msgUtcDateTime: '',
     };
   },
   mounted() {
-    axios.get(`${config.backEnd.greetingServiceUrl}/greet/OshanKottege`)
+    const baseUrl = config.backEnd.serviceUrl;
+    axios.get(`${baseUrl}/greetings/OshanKottege`)
       .then((resp) => {
         this.msg = resp.data;
+      });
+    axios.get(`${baseUrl}/get-utc`)
+      .then((resp) => {
+        this.msgUtcDateTime = resp.data;
       });
   },
 };
