@@ -48,28 +48,28 @@ namespace SayHelloService
 	    {
 		    if (request.PathParameters.ContainsKey("name"))
 		    {
-			    var name = request.PathParameters["name"];
-			    context.Logger.LogLine($"Name is: {name}");
-
-			    return new APIGatewayProxyResponse
-			    {
-				    StatusCode = (int)HttpStatusCode.OK,
-				    Body = $"Hello {name}!  How are you?  Current time is: {DateTime.Now}",
-				    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" },{ "Access-Control-Allow-Origin", "*" } }
-			    };
-			  }
+				var name = request.PathParameters["name"];
+				context.Logger.LogLine($"Name is: {name}");
+				return CreateResponse(HttpStatusCode.OK, $"Hello {name}!  How are you?  Current time is: {DateTime.Now}");
+			}
 
 		    return new APIGatewayProxyResponse {StatusCode = (int) HttpStatusCode.BadRequest};
 	    }
 
 	    public APIGatewayProxyResponse GetCurrentDateUtc(APIGatewayProxyRequest request, ILambdaContext context)
 	    {
+			var response = CreateResponse(HttpStatusCode.OK, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
+			return response;
+	    }
+
+	    private APIGatewayProxyResponse CreateResponse(HttpStatusCode status, string body)
+	    {
 		    return new APIGatewayProxyResponse
 		    {
-			    StatusCode = (int) HttpStatusCode.OK,
-			    Body = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+			    StatusCode = (int) status,
+			    Body = body,
 			    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
 		    };
-		  }
+		}
     }
 }
