@@ -57,7 +57,7 @@ namespace SayHelloService
 				    Body = $"Hello {name}!  How are you?  Current time is: {DateTime.Now}",
 				    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" },{ "Access-Control-Allow-Origin", "*" } }
 			    };
-			}
+			  }
 
 		    return new APIGatewayProxyResponse {StatusCode = (int) HttpStatusCode.BadRequest};
 	    }
@@ -70,6 +70,6 @@ namespace SayHelloService
 			    Body = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
 			    Headers = new Dictionary<string, string> { { "Content-Type", "application/json" }, { "Access-Control-Allow-Origin", "*" } }
 		    };
-		}
+		  }
     }
 }
