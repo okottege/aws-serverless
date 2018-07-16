@@ -23,13 +23,29 @@ export default {
       .then((resp) => {
         this.msg = resp.data;
       });
-    // axios.get(`${baseUrl}/get-utc`)
-    //   .then((resp) => {
-    //     this.msgUtcDateTime = resp.data;
-    //   });
 
     const user = await this.signIn();
     console.log('Access token: ', user.signInUserSession.accessToken.jwtToken);
+
+    const headers = {
+      headers: {
+        Authorization: user.signInUserSession.accessToken.jwtToken,
+      },
+    };
+
+    try {
+      const utcTime = await axios.get(`${baseUrl}/get-utc`, headers);
+      this.msgUtcDateTime = utcTime.data;
+    } catch (err) {
+      console.log('Error: ', JSON.stringify(err));
+    }
+    // axios.get(`${baseUrl}/get-utc`, headers)
+    //   .then((resp) => {
+    //     this.msgUtcDateTime = resp.data;
+    //   })
+    //   .catch((err) => {
+    //     console.log('Error: ', JSON.stringify(err));
+    //   });
   },
   methods: {
     async signIn() {
