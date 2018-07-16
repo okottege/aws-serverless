@@ -25,11 +25,11 @@ export default {
       });
 
     const user = await this.signIn();
-    console.log('Access token: ', user.signInUserSession.accessToken.jwtToken);
+    const idToken = user.signInUserSession.idToken.jwtToken;
 
     const headers = {
       headers: {
-        Authorization: user.signInUserSession.accessToken.jwtToken,
+        Authorization: idToken,
       },
     };
 
@@ -39,20 +39,13 @@ export default {
     } catch (err) {
       console.log('Error: ', JSON.stringify(err));
     }
-    // axios.get(`${baseUrl}/get-utc`, headers)
-    //   .then((resp) => {
-    //     this.msgUtcDateTime = resp.data;
-    //   })
-    //   .catch((err) => {
-    //     console.log('Error: ', JSON.stringify(err));
-    //   });
   },
   methods: {
     async signIn() {
       console.log('Signing in...');
       try {
         const user = await Auth.signIn('oshan@sample-email.com', 'password01');
-        console.log('found user for email');
+        console.log('Sign in successful.  Found user for email');
         return user;
       } catch (err) {
         console.log('Error signing in: ', err);
