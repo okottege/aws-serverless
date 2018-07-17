@@ -2,6 +2,7 @@
   <div>
     <h1>{{msg}}</h1>
     <h2>Utc Date Time {{msgUtcDateTime}}</h2>
+    <span>More coming soon, <strong>very soon.</strong></span>
   </div>
 </template>
 <script>
