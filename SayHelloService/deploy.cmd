@@ -1,2 +1,2 @@
-dotnet lambda package --configuration release --framework netcoreapp2.0 --output-package bin/release/netcoreapp2.0/say-hello-deploy.zip
+dotnet lambda package --configuration release --framework netcoreapp2.1 --output-package bin/release/netcoreapp2.1/say-hello-deploy.zip
 serverless deploy --aws-profile hackDay --verbose
