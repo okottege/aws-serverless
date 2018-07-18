@@ -2,11 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import Amplify from 'aws-amplify';
+import BootstrapVue from 'bootstrap-vue';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import App from './App';
 import router from './router';
 import config from './config';
-
 
 Vue.config.productionTip = false;
 Amplify.configure({
@@ -27,6 +30,7 @@ Amplify.configure({
   },
 });
 
+Vue.use(BootstrapVue);
 
 /* eslint-disable no-new */
 new Vue({
