@@ -13,7 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
-    "aws-amplify": "^1.0.0",
+    "aws-amplify": "^1.0.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "latest",
