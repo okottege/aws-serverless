@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import VueLocalStorage from 'vue-localstorage';
 
+Vue.use(VueLocalStorage);
 Vue.use(Vuex);
 
 /* eslint-disable no-param-reassign  */
@@ -11,7 +13,7 @@ const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
 
 const state = {
-  isLoggedIn: false,
+  isLoggedIn: !!this.$localstorage.getItem('token'),
 };
 
 const mutations = {
@@ -34,7 +36,19 @@ const mutations = {
 };
 
 const actions = {
-
+  login({ commit }, credentials) {
+    commit(LOGIN);
+    this.$localstorage.set('access-token', 'token');
+    commit(LOGIN_SUCCESS);
+  },
+  logout({ commit }) {
+    this.$localstorage.removeItem('token');
+    commit(LOGOUT);
+  },
 };
 
-export default new Vuex.Store({});
+export default new Vuex.Store({
+  state,
+  mutations,
+  actions,
+});
