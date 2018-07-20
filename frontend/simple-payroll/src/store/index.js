@@ -13,7 +13,7 @@ const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
 
 const state = {
-  isLoggedIn: !!localStorage.getItem('access-token'),
+  isLoggedIn: async () => await Auth.currentUserInfo() !== undefined,
 };
 
 const mutations = {
@@ -44,15 +44,15 @@ const actions = {
     commit(LOGIN);
     try {
       const user = await Auth.signIn(credentials.email, credentials.password);
-      localStorage.set('access-token', user.signInUserSession.idToken.jwtToken);
+      localStorage.setItem('access-token', user.signInUserSession.idToken.jwtToken);
       console.log('User found for credentials.');
     } catch (err) {
       console.log('Error login in ', JSON.stringify(err));
     }
     commit(LOGIN_SUCCESS);
   },
-  logout({ commit }) {
-    localStorage.removeItem('access-token');
+  async logout({ commit }) {
+    await Auth.signOut();
     commit(LOGOUT);
   },
 };
