@@ -33,6 +33,8 @@ export default {
     onSubmit(e) {
       e.preventDefault();
       console.log('Form output: ', JSON.stringify(this.form));
+      this.$store.dispatch('login', this.form);
+      this.$router.push('/');
     },
     onReset(e) {
       e.preventDefault();

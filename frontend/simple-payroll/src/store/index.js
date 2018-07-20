@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueLocalStorage from 'vue-localstorage';
+import { Auth } from 'aws-amplify';
 
-Vue.use(VueLocalStorage);
 Vue.use(Vuex);
 
 /* eslint-disable no-param-reassign  */
+/* eslint-disable no-undef */
 
 const LOGIN = 'LOGIN';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -13,7 +13,7 @@ const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
 
 const state = {
-  isLoggedIn: !!this.$localstorage.getItem('token'),
+  isLoggedIn: !!localStorage.getItem('access-token'),
 };
 
 const mutations = {
@@ -35,14 +35,24 @@ const mutations = {
   },
 };
 
+const getters = {
+  isLoggedIn: appState => appState.isLoggedIn,
+};
+
 const actions = {
-  login({ commit }, credentials) {
+  async login({ commit }, credentials) {
     commit(LOGIN);
-    this.$localstorage.set('access-token', 'token');
+    try {
+      const user = await Auth.signIn(credentials.email, credentials.password);
+      localStorage.set('access-token', user.signInUserSession.idToken.jwtToken);
+      console.log('User found for credentials.');
+    } catch (err) {
+      console.log('Error login in ', JSON.stringify(err));
+    }
     commit(LOGIN_SUCCESS);
   },
   logout({ commit }) {
-    this.$localstorage.removeItem('token');
+    localStorage.removeItem('access-token');
     commit(LOGOUT);
   },
 };
@@ -51,4 +61,5 @@ export default new Vuex.Store({
   state,
   mutations,
   actions,
+  getters,
 });

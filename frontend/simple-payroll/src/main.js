@@ -9,6 +9,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import App from './App';
 import router from './router';
 import config from './config';
+import store from './store';
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
@@ -35,6 +36,7 @@ Amplify.configure({
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App },
 });
