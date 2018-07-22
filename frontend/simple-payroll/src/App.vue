@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <section>
-      <router-link to="/">Home</router-link>
-      <router-link to="/login" v-if="!isLoggedIn">Login</router-link>
-      <a href="#" v-if="isLoggedIn" @click="logout">Logout</a>
-    </section>
-    <b-navbar-nav>
-      <b-nav-item href="/">Home</b-nav-item>
-      <b-nav-item href="/login" v-if="!isLoggedIn">Login</b-nav-item>
-      <b-link href="#" v-if="isLoggedIn" @click="logout">Logout</b-link>
-    </b-navbar-nav>
+    <b-navbar toggleable="md" type="light" variant="info">
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-brand href='/'>Home</b-navbar-brand>
+      <b-collapse is-nav id="nav-collapse">
+
+        <b-navbar-nav>
+          <b-nav-item href="/login" v-if="!isLoggedIn">Login</b-nav-item>
+          <b-nav-item href="#" v-if="isLoggedIn" @click="logout">Logout</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <img src="./assets/logo.png">
     <router-view></router-view>
   </div>
@@ -23,8 +24,13 @@ export default {
       this.$store.dispatch('logout');
     },
   },
+  beforeCreate() {
+    console.log('In created hook.');
+    this.$store.dispatch('loadLoggedInUser');
+  },
   computed: {
     isLoggedIn() {
+      console.log('Is logged in? ', this.$store.getters.isLoggedIn);
       return this.$store.getters.isLoggedIn;
     },
   },

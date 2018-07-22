@@ -11,9 +11,16 @@ const LOGIN = 'LOGIN';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
+const SET_LOGGED_IN_USER = 'SET_LOGGED_IN_USER';
+
+const getUserFromBackendStore = async () => {
+  const user = await Auth.currentUserInfo();
+  return user;
+};
 
 const state = {
-  isLoggedIn: async () => await Auth.currentUserInfo() !== undefined,
+  isLoggedIn: this.loggedInUser !== undefined,
+  loggedInUser: undefined,
 };
 
 const mutations = {
@@ -33,6 +40,9 @@ const mutations = {
   [LOGIN_FAILURE](appState) {
     appState.pending = false;
   },
+  [SET_LOGGED_IN_USER](appState, user) {
+    appState.loggedInUser = user;
+  },
 };
 
 const getters = {
@@ -42,18 +52,26 @@ const getters = {
 const actions = {
   async login({ commit }, credentials) {
     commit(LOGIN);
+    let user;
     try {
-      const user = await Auth.signIn(credentials.email, credentials.password);
-      localStorage.setItem('access-token', user.signInUserSession.idToken.jwtToken);
+      await Auth.signIn(credentials.email, credentials.password);
+      user = await getUserFromBackendStore();
       console.log('User found for credentials.');
     } catch (err) {
       console.log('Error login in ', JSON.stringify(err));
     }
     commit(LOGIN_SUCCESS);
+    commit(SET_LOGGED_IN_USER, user);
   },
   async logout({ commit }) {
     await Auth.signOut();
     commit(LOGOUT);
+    commit(SET_LOGGED_IN_USER, undefined);
+  },
+  async loadLoggedInUser({ commit }) {
+    const user = await getUserFromBackendStore();
+    console.log('logged in user: ', JSON.stringify(user));
+    commit(SET_LOGGED_IN_USER, user);
   },
 };
 
