@@ -41,12 +41,16 @@ const mutations = {
     appState.pending = false;
   },
   [SET_LOGGED_IN_USER](appState, user) {
+    console.log('Setting logged in user: ', JSON.stringify(user));
     appState.loggedInUser = user;
   },
 };
 
 const getters = {
-  isLoggedIn: appState => appState.isLoggedIn,
+  isLoggedIn: (appState) => {
+    console.log('Application state: ', JSON.stringify(appState));
+    return appState.isLoggedIn;
+  },
 };
 
 const actions = {

@@ -19,19 +19,28 @@
 <script>
 export default {
   name: 'app',
+  data() {
+    return {
+      compLoaded: false,
+    };
+  },
   methods: {
     logout() {
       this.$store.dispatch('logout');
     },
   },
-  beforeCreate() {
+  async mounted() {
     console.log('In created hook.');
-    this.$store.dispatch('loadLoggedInUser');
+    await this.$store.dispatch('loadLoggedInUser');
+    this.compLoaded = true;
   },
   computed: {
     isLoggedIn() {
-      console.log('Is logged in? ', this.$store.getters.isLoggedIn);
-      return this.$store.getters.isLoggedIn;
+      if (this.compLoaded) {
+        console.log('Is logged in? ', this.$store.getters.isLoggedIn);
+        return this.$store.getters.isLoggedIn;
+      }
+      return false;
     },
   },
 };
