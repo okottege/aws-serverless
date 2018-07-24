@@ -12,6 +12,7 @@ const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 const LOGOUT = 'LOGOUT';
 const SET_LOGGED_IN_USER = 'SET_LOGGED_IN_USER';
+const UPDATE_LOGIN_STATUS = 'UPDATE_LOGIN_STATUS';
 
 const getUserFromBackendStore = async () => {
   const user = await Auth.currentUserInfo();
@@ -41,16 +42,16 @@ const mutations = {
     appState.pending = false;
   },
   [SET_LOGGED_IN_USER](appState, user) {
-    console.log('Setting logged in user: ', JSON.stringify(user));
     appState.loggedInUser = user;
+  },
+  [UPDATE_LOGIN_STATUS](appState, isLoggedIn) {
+    appState.isLoggedIn = isLoggedIn;
   },
 };
 
 const getters = {
-  isLoggedIn: (appState) => {
-    console.log('Application state: ', JSON.stringify(appState));
-    return appState.isLoggedIn;
-  },
+  isLoggedIn: appState => appState.isLoggedIn,
+  loggedInUser: appState => appState.loggedInUser,
 };
 
 const actions = {
@@ -60,7 +61,6 @@ const actions = {
     try {
       await Auth.signIn(credentials.email, credentials.password);
       user = await getUserFromBackendStore();
-      console.log('User found for credentials.');
     } catch (err) {
       console.log('Error login in ', JSON.stringify(err));
     }
@@ -74,8 +74,11 @@ const actions = {
   },
   async loadLoggedInUser({ commit }) {
     const user = await getUserFromBackendStore();
-    console.log('logged in user: ', JSON.stringify(user));
     commit(SET_LOGGED_IN_USER, user);
+  },
+  updateLoginStatus({ commit }, loggedInUser) {
+    const isLoggedIn = loggedInUser !== null || loggedInUser !== undefined || loggedInUser !== {};
+    commit(UPDATE_LOGIN_STATUS, isLoggedIn);
   },
 };
 

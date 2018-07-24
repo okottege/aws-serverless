@@ -31,23 +31,21 @@ export default {
       this.$store.dispatch('logout');
     },
   },
-  async mounted() {
-    console.log('In created hook.');
+  async created() {
     await this.$store.dispatch('loadLoggedInUser');
   },
   computed: {
     ...mapGetters([
-      'isLoggedIn'
+      'loggedInUser',
+      'isLoggedIn',
     ]),
   },
   watch: {
-    isLoggedIn() {
-      // if (this.compLoaded) {
-      //   console.log('Is logged in? ', this.$store.getters.isLoggedIn);
-      //   return this.$store.getters.isLoggedIn;
-      // }
-      this.$store.dispatch('')
-    }  
+    loggedInUser() {
+      if (this.loggedInUser) {
+        this.$store.dispatch('updateLoginStatus', this.loggedInUser);
+      }
+    },
   },
 };
 </script>

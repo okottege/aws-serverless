@@ -27,7 +27,6 @@ const router = new Router({
 router.beforeEach(async (to, from, next) => {
   if (to.meta.authRequired) {
     const user = await Auth.currentUserInfo();
-    console.log('Logged in user is: ', JSON.stringify(user));
 
     if (user) {
       next();
