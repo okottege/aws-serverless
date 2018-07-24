@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'app',
   data() {
@@ -32,16 +34,20 @@ export default {
   async mounted() {
     console.log('In created hook.');
     await this.$store.dispatch('loadLoggedInUser');
-    this.compLoaded = true;
   },
   computed: {
+    ...mapGetters([
+      'isLoggedIn'
+    ]),
+  },
+  watch: {
     isLoggedIn() {
-      if (this.compLoaded) {
-        console.log('Is logged in? ', this.$store.getters.isLoggedIn);
-        return this.$store.getters.isLoggedIn;
-      }
-      return false;
-    },
+      // if (this.compLoaded) {
+      //   console.log('Is logged in? ', this.$store.getters.isLoggedIn);
+      //   return this.$store.getters.isLoggedIn;
+      // }
+      this.$store.dispatch('')
+    }  
   },
 };
 </script>
