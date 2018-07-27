@@ -10,7 +10,8 @@
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
-    "lint": "eslint --ext .js,.vue src test/unit/specs"
+    "lint": "eslint --ext .js,.vue src test/unit/specs",
+    "deploy-test": "npm run build && aws s3 sync --profile hackDay .\\dist\\ s3://osh-simple-spa/"
   },
   "dependencies": {
     "aws-amplify": "^1.0.1",
